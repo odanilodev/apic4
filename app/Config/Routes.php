@@ -39,6 +39,8 @@ $routes->post('login', 'Login::login');
 //Rotas
 $routes->get('/', 'Home::index');
 $routes->resource('categorias');
+$routes->get('externa/categorias/', 'Categorias::todas');
+
 
 /*
  * --------------------------------------------------------------------

@@ -42,7 +42,7 @@ class Filters extends BaseConfig
 
 	public $globals = [
 		'before' => [
-			'auth' => ['except' => ['login']]
+			'auth' => ['except' => ['login', 'externa/categorias/']]
 		],
 		'after' => [
 			// outros filtros
