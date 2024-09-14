@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use CodeIgniter\RESTful\ResourceController;
+use App\Services\CategoriaService;
 use Config\Services;
 
 class Categorias extends ResourceController
@@ -10,23 +11,27 @@ class Categorias extends ResourceController
     protected $modelName = 'App\Models\CategoriasModel';
     protected $format = 'json';
     protected $empresaId;
+    protected $categoriaService;
 
-    public function __construct() {
+    public function __construct()
+    {
         $session = Services::session();
         $this->empresaId = $session->get('empresaId');
+        $this->categoriaService = new CategoriaService();
     }
 
     // GET /categorias
     public function index()
     {
-        $data = $this->model->findAll();
+        $data = $this->categoriaService->getCategorias($this->empresaId);
+
         return $this->respond($data);
     }
 
     // GET /categorias/{id}
     public function show($id = null)
     {
-        $categoria = $this->model->find($id);
+        $categoria = $this->model->where('id_empresa', $this->empresaId)->find($id);
         if ($categoria) {
             return $this->respond($categoria);
         } else {
@@ -61,7 +66,7 @@ class Categorias extends ResourceController
         $data = $this->request->getJSON(true);
 
         // Verifica se o registro existe
-        $existingId = $this->model->find($id);
+        $existingId = $this->model->where('id_empresa', $this->empresaId)->find($id);
         if (!$existingId) {
             // Se o registro não existir, retorna uma resposta de erro
             return $this->failNotFound('Categoria não encontrada.');
@@ -76,7 +81,7 @@ class Categorias extends ResourceController
         }
 
         // Atualiza o registro
-        if ($this->model->update($id, $data)) {
+        if ($this->model->where('id_empresa', $this->empresaId)->update($id, $data)) {
             return $this->respond($data);
         } else {
             // Se a atualização falhar, retorna uma resposta de falha genérica
@@ -100,11 +105,21 @@ class Categorias extends ResourceController
         }
 
         // Tenta excluir o registro
-        if ($this->model->delete($id)) {
+        if ($this->model->where('id_empresa', $this->empresaId)->delete($id)) {
             return $this->respondDeleted(['id' => $id]);
         } else {
             // Se a exclusão falhar, retorna uma resposta de falha
             return $this->failNotFound('Categoria não encontrada');
         }
+    }
+
+    // Rotas externas
+
+    // GET /externa/categorias
+    public function todas()
+    {
+        $idEmpresa = $this->request->getHeaderLine('Id-Empresa');
+        $data = $this->categoriaService->getCategorias($idEmpresa);
+        return $this->respond($data);
     }
 }
