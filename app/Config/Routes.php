@@ -39,7 +39,13 @@ $routes->post('login', 'Login::login');
 //Rotas
 $routes->get('/', 'Home::index');
 $routes->resource('categorias');
-$routes->get('externa/categorias/', 'Categorias::todas');
+
+
+$routes->group('externa', ['namespace' => 'App\Controllers'], function($routes) {
+    $routes->get('categorias/', 'Categorias::todas');
+    $routes->get('produtos/', 'Produtos::todos');
+    $routes->get('produto/(:num)', 'Produtos::produto/$1');
+});
 
 
 /*
