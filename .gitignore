@@ -127,3 +127,30 @@ nb-configuration.xml
 /phpunit*.xml
 /.phpunit.*.cache
 
+#base servidor
+.bash_logout
+.bash_profile
+.bashrc
+.cache/
+.cpanel/
+.cphorde/
+.lastlogin
+.myimunify_id
+.razor/
+.softaculous/
+.spamassassin/
+.spamassassinboxenable
+.spamassassinenable
+.subaccounts/
+.trash/
+.wp-toolkit-identifier
+access-logs/
+etc/
+logs/
+mail/
+public_html/
+ssl/
+tmp/
+www/
+
+
