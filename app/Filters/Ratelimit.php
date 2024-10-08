@@ -8,7 +8,7 @@ use CodeIgniter\HTTP\ResponseInterface;
 
 class Ratelimit implements FilterInterface
 {
-	protected $maxRequests = 2; // Máximo de requisições permitidas
+	protected $maxRequests = 100; // Máximo de requisições permitidas
 	protected $window = 3600; // Janela de tempo em segundos (1 hora)
 	protected $cache;
 

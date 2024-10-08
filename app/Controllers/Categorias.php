@@ -20,6 +20,11 @@ class Categorias extends ResourceController
     public function index()
     {
         $data = $this->model->findAll();
+        
+        if(!$data){
+            return $this->respondNoContent('Nenhuma categoria encontrada.');
+        }
+
         return $this->respond($data);
     }
 
