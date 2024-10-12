@@ -21,6 +21,7 @@ class Filters extends BaseConfig
 		'honeypot' => Honeypot::class,
 		'auth' => \App\Filters\AuthFilter::class,
 		'rateLimit' => \App\Filters\RateLimit::class,
+		'cors' => \App\Filters\Cors::class,
 	];
 
 	/**
@@ -42,7 +43,8 @@ class Filters extends BaseConfig
 
 	public $globals = [
 		'before' => [
-			'auth' => ['except' => ['login', 'externa/categorias/', 'externa/produtos/', 'externa/produto/*']]
+			// 'auth' => ['except' => ['login', 'externa/categorias/', 'externa/produtos/', 'externa/produto/*']],
+			'cors',
 		],
 		'after' => [
 			// outros filtros
